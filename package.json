@@ -1,0 +1,14 @@
+{
+  "name": "homebridge-emerald-hws",
+  "version": "0.1.0",
+  "description": "Homebridge plugin for Emerald Heat Pump Hot Water Systems using the emerald_hws Python library.",
+  "main": "index.js",
+  "displayName": "Emerald HWS",
+  "author": "You",
+  "license": "MIT",
+  "keywords": ["homebridge-plugin","emerald","emerald-hws","hot water","heat pump"],
+  "engines": {"node": ">=16.0.0","homebridge": ">=1.6.0"},
+  "files": ["index.js","lib","python","config.schema.json","README.md"],
+  "peerDependencies": {"homebridge": ">=1.6.0"},
+  "dependencies": {}
+}

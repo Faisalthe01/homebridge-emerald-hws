@@ -1,0 +1,13 @@
+{
+  "pluginAlias": "EmeraldHws",
+  "pluginType": "platform",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "email": {"type": "string","title": "Emerald account email","required": true},
+      "password": {"type": "string","title": "Emerald account password","required": true},
+      "pythonPath": {"type": "string","title": "Python executable path","default": "python3"},
+      "pollInterval": {"type": "number","title": "Poll interval (seconds)","default": 60,"minimum": 15}
+    }
+  }
+}
