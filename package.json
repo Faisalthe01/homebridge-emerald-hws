@@ -4,11 +4,38 @@
   "description": "Homebridge plugin for Emerald Heat Pump Hot Water Systems using the emerald_hws Python library.",
   "main": "index.js",
   "displayName": "Emerald HWS",
-  "author": "You",
+  "author": {
+    "name": "faisalm",
+  },
   "license": "MIT",
-  "keywords": ["homebridge-plugin","emerald","emerald-hws","hot water","heat pump"],
-  "engines": {"node": ">=16.0.0","homebridge": ">=1.6.0"},
-  "files": ["index.js","lib","python","config.schema.json","README.md"],
-  "peerDependencies": {"homebridge": ">=1.6.0"},
+  "keywords": [
+    "homebridge-plugin",
+    "homebridge",
+    "emerald",
+    "emerald-hws",
+    "hot-water",
+    "heat-pump"
+  ],
+  "engines": {
+    "node": ">=16.0.0",
+    "homebridge": ">=1.6.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Faisalthe01/homebridge-emerald-hws.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Faisalthe01/homebridge-emerald-hws/issues"
+  },
+  "files": [
+    "index.js",
+    "lib/",
+    "python/",
+    "config.schema.json",
+    "README.md"
+  ],
+  "peerDependencies": {
+    "homebridge": ">=1.6.0"
+  },
   "dependencies": {}
 }
