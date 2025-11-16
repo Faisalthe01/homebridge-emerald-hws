@@ -10,7 +10,7 @@ class EmeraldHwsPlatform {
     this.api = api;
     this.accessories = new Map();
 
-    // 🚨 1. Config missing entirely
+    // 1. Config missing entirely
     if (!config) {
       this.log.warn('EmeraldHws: No configuration found. Plugin disabled.');
       return; // ← SAFE RETURN
@@ -19,7 +19,7 @@ class EmeraldHwsPlatform {
     // Store config safely
     this.config = config;
 
-    // 🚨 2. Missing required auth values
+    // 2. Missing required auth values
     if (!config.email || !config.password) {
       this.log.error(
         'EmeraldHws: "email" and "password" are required in config.json. ' +
@@ -28,14 +28,14 @@ class EmeraldHwsPlatform {
       return; // ← SAFE RETURN (NO CRASH)
     }
 
-    // 🚨 3. Invalid poll interval → enforce minimum 15s
+    //  3. Invalid poll interval → enforce minimum 15s
     this.pollInterval = Number(config.pollInterval);
     if (isNaN(this.pollInterval) || this.pollInterval < 15) {
       this.pollInterval = 60;
       this.log.warn('EmeraldHws: pollInterval invalid or too low. Using default 60 seconds.');
     }
 
-    // 🚨 4. pythonPath missing → default to python3
+    //  4. pythonPath missing → default to python3
     this.pythonPath = config.pythonPath || 'python3';
 
     // Create client (wrapped in try/catch so constructor errors never crash HB)
