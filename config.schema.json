@@ -7,18 +7,15 @@
       "name": {
         "title": "Name",
         "type": "string",
-        "required": true,
         "default": "Emerald HWS"
       },
       "email": {
         "type": "string",
-        "title": "Emerald account email",
-        "required": true
+        "title": "Emerald account email"
       },
       "password": {
         "type": "string",
-        "title": "Emerald account password",
-        "required": true
+        "title": "Emerald account password"
       },
       "pythonPath": {
         "type": "string",
@@ -31,6 +28,11 @@
         "default": 60,
         "minimum": 15
       }
-    }
+    },
+    "required": [
+      "name",
+      "email",
+      "password"
+    ]
   }
 }
