@@ -1,13 +1,16 @@
 {
   "name": "homebridge-emerald-hws",
-  "version": "1.0.5",
-  "description": "Homebridge plugin for Emerald Heat Pump Hot Water Systems...",
+  "version": "1.0.6",
+  "description": "Homebridge plugin for Emerald Heat Pump Hot Water Systems.",
   "displayName": "Emerald HWS",
   "main": "index.js",
+
   "pluginAlias": "EmeraldHws",
   "pluginType": "platform",
+
   "author": "Faisalthe01",
   "license": "MIT",
+
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Faisalthe01/homebridge-emerald-hws.git"
@@ -16,15 +19,22 @@
   "bugs": {
     "url": "https://github.com/Faisalthe01/homebridge-emerald-hws/issues"
   },
+
   "keywords": [
     "homebridge-plugin",
-    "emerald-hws"
+    "emerald-hws",
+    "hotwater",
+    "emerald",
+    "heatpump"
   ],
+
   "engines": {
     "node": ">=18.0.0",
     "homebridge": "^1.6.0 || ^2.0.0"
   },
+
   "preferGlobal": true,
+
   "files": [
     "index.js",
     "lib/",
@@ -33,15 +43,22 @@
     "config.schema.json",
     "README.md"
   ],
+
   "peerDependencies": {
     "homebridge": "^1.6.0 || ^2.0.0"
   },
+
   "dependencies": {},
+
   "devDependencies": {
-    "homebridge": "^1.6.0",
-    "hap-nodejs": "^0.11.0",
     "eslint": "^8.46.0"
   },
+
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/Faisalthe01"
+  },
+
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
