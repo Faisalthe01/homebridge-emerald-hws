@@ -63,6 +63,5 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "test": ""
-  },
-
+  }
 }
