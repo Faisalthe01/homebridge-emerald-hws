@@ -57,19 +57,19 @@ The library will then be installed under the Homebridge user.
 ---
 
 ### emerald_hws_py Python library  
-This library must be installed under the Homebridge service user (usually `homebridge`).  
+This library must be installed under the Homebridge service user on the Raspberry Pi Image (which is pi).
 It should not be installed as root.
 
 Install:
 
 ```bash
-sudo -u homebridge pip3 install emerald_hws_py
+sudo -u pi pip3 install emerald_hws
 ```
 
 Verify:
 
 ```bash
-sudo -u homebridge python3 -c "import emerald_hws"
+sudo -u pi python3 -c "import emerald_hws"
 ```
 
 If no output or errors appear, the installation is correct.
