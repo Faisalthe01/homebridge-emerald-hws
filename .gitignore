@@ -1,3 +1,75 @@
+#############################
+# Node.js / Homebridge
+#############################
+
+# Node modules
 node_modules/
+
+# npm logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build artifacts
+dist/
+build/
+.cache/
+
+#############################
+# Python
+#############################
+
+# Python bytecode
 __pycache__/
-python/__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+python/env/
+python/venv/
+env/
+venv/
+ENV/
+.venv/
+
+# Python packaging
+*.egg-info/
+.eggs/
+
+#############################
+# OS files
+#############################
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+#############################
+# Editors / IDEs
+#############################
+
+# VSCode
+.vscode/
+
+# JetBrains (WebStorm / PyCharm)
+.idea/
+
+# Other editors
+*.swp
+*.swo
+
+#############################
+# Temporary + misc
+#############################
+
+*.tmp
+*.temp
+*.bak
+*.old
+*.orig
+*.log
