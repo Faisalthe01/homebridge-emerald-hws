@@ -2,10 +2,6 @@
   "pluginAlias": "EmeraldHws",
   "pluginType": "platform",
   "name": "EmeraldHws",
-
-  "headerDisplay": "Configuration for the Emerald Heat Pump Hot Water System plugin.",
-  "footerDisplay": "Ensure Python and emerald_hws_py are installed on your Homebridge server.",
-
   "schema": {
     "type": "object",
     "properties": {
