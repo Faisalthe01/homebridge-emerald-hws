@@ -1,4 +1,3 @@
-// index.js
 const EmeraldClient = require('./lib/EmeraldClient');
 const EmeraldHwsAccessory = require('./lib/EmeraldHwsAccessory');
 
@@ -28,6 +27,21 @@ class EmeraldHwsPlatform {
   }
 
   configureAccessory(accessory) {
+    this.log.info('Loading accessory from cache:', accessory.displayName);
+
+    if (accessory.context.firmware) {
+      // The verbose log line was removed from here
+      const infoService = accessory.getService(this.api.hap.Service.AccessoryInformation);
+      
+      if (infoService) {
+        infoService.setCharacteristic(
+          this.api.hap.Characteristic.FirmwareRevision,
+          accessory.context.firmware
+        );
+      }
+    }
+
+
     this.accessories.set(accessory.UUID, accessory);
   }
 
@@ -35,7 +49,7 @@ class EmeraldHwsPlatform {
     let devices;
     try {
       devices = await this.client.discoverDevices();
-    } catch(e) {
+    } catch (e) {
       this.log.error('Discover failed:', e.message);
       return;
     }
@@ -45,7 +59,7 @@ class EmeraldHwsPlatform {
     for (const dev of devices) {
       const id = dev.id;
       const name = dev.name;
-      const accUUID = uuid.generate('emerald-hws:' + id);
+      const accUUID = uuid.generate('emerald-hwsys:' + id);
       let accessory = this.accessories.get(accUUID);
 
       if (!accessory) {
@@ -54,7 +68,24 @@ class EmeraldHwsPlatform {
         this.accessories.set(accUUID, accessory);
       }
 
-      const wrapper = new EmeraldHwsAccessory(this, accessory, dev, this.client);
+      // Fetch initial status before constructing accessory
+      let initialStatus = {};
+      try {
+        initialStatus = await this.client.getStatus(dev.id);
+      } catch (e) {
+        this.log.error(`Failed to get initial status for ${dev.id}:`, e.message);
+      }
+
+      // Pass initial status into accessory constructor
+      const wrapper = new EmeraldHwsAccessory(
+        this,
+        accessory,
+        dev,
+        initialStatus,
+        this.client
+      );
+
+      // This polling setup is still not ideal, but it works.
       this.startPolling(wrapper);
     }
   }
