@@ -20,8 +20,6 @@ Provides monitoring and basic control of the Emerald HWS through Apple HomeKit.
 
 ## HomeKit Screenshots
 
-Add your screenshots to the `images/` folder and update the paths below.
-
 ### Main Control Interface
 <img src="./images/screenshot-main.jpg" width="300"/>
 
