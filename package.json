@@ -1,6 +1,6 @@
 {
   "name": "homebridge-emerald-hws",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Homebridge plugin for Emerald Heat Pump Hot Water Systems...",
   "displayName": "Emerald HWS",
   "main": "index.js",
@@ -38,6 +38,8 @@
   },
   "dependencies": {},
   "devDependencies": {
+    "homebridge": "^1.6.0",
+    "hap-nodejs": "^0.11.0",
     "eslint": "^8.46.0"
   },
   "scripts": {
