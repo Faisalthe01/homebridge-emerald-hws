@@ -183,12 +183,5 @@ Without this library, Homebridge integration for Emerald HWS would not be possib
 
 ---
 
-## Changelog
-
-See GitHub releases:  
-https://github.com/Faisalthe01/homebridge-emerald-hws/releases
-
----
-
 ## License  
 MIT License
