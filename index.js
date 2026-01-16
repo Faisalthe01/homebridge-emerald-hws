@@ -7,46 +7,20 @@ const PLUGIN_NAME = 'homebridge-emerald-hws';
 class EmeraldHwsPlatform {
   constructor(log, config, api) {
     this.log = log;
+    this.config = config || {};
     this.api = api;
     this.accessories = new Map();
+    this.client = null;
 
-    // 1. Config missing entirely
-    if (!config) {
-      this.log.warn('EmeraldHws: No configuration found. Plugin disabled.');
-      return; // ← SAFE RETURN
+    if (!config || !config.email || !config.password) {
+      this.log.error('EmeraldHws: email and password required.');
+      return;
     }
 
-    // Store config safely
-    this.config = config;
+    this.client = new EmeraldClient(this.log, config);
+    // Ensure poll interval is at least 15 seconds
+    this.pollInterval = Math.max(config.pollInterval || 60, 15);
 
-    // 2. Missing required auth values
-    if (!config.email || !config.password) {
-      this.log.error(
-        'EmeraldHws: "email" and "password" are required in config.json. ' +
-        'Plugin will not load until these are added.'
-      );
-      return; // ← SAFE RETURN (NO CRASH)
-    }
-
-    //  3. Invalid poll interval → enforce minimum 15s
-    this.pollInterval = Number(config.pollInterval);
-    if (isNaN(this.pollInterval) || this.pollInterval < 15) {
-      this.pollInterval = 60;
-      this.log.warn('EmeraldHws: pollInterval invalid or too low. Using default 60 seconds.');
-    }
-
-    //  4. pythonPath missing → default to python3
-    this.pythonPath = config.pythonPath || 'python3';
-
-    // Create client (wrapped in try/catch so constructor errors never crash HB)
-    try {
-      this.client = new EmeraldClient(this.log, config);
-    } catch (err) {
-      this.log.error('EmeraldHws: Failed to initialize client:', err.message);
-      return; // ← SAFE RETURN
-    }
-
-    // Only run discovery once Homebridge has fully loaded
     api.on('didFinishLaunching', () => {
       this.log.info('EmeraldHws: discovering devices...');
       this.discoverDevices();
@@ -58,7 +32,7 @@ class EmeraldHwsPlatform {
 
     if (accessory.context.firmware) {
       const infoService = accessory.getService(this.api.hap.Service.AccessoryInformation);
-
+      
       if (infoService) {
         infoService.setCharacteristic(
           this.api.hap.Characteristic.FirmwareRevision,
@@ -71,22 +45,17 @@ class EmeraldHwsPlatform {
   }
 
   async discoverDevices() {
-    if (!this.client) {
-      this.log.error('EmeraldHws: Client not initialized. Discovery aborted.');
-      return; // ← SAFE RETURN
-    }
-
     let devices;
     try {
       devices = await this.client.discoverDevices();
     } catch (e) {
-      this.log.error('EmeraldHws: Device discovery failed:', e.message);
-      return; // ← SAFE RETURN
+      this.log.error('Discover failed:', e.message);
+      return;
     }
 
     const { uuid } = this.api.hap;
 
-    for (const dev of devices || []) {
+    for (const dev of devices) {
       const id = dev.id;
       const name = dev.name;
       const accUUID = uuid.generate('emerald-hwsys:' + id);
@@ -98,42 +67,29 @@ class EmeraldHwsPlatform {
         this.accessories.set(accUUID, accessory);
       }
 
-      // Fetch initial status safely
+      // Fetch initial status before constructing accessory
       let initialStatus = {};
       try {
         initialStatus = await this.client.getStatus(dev.id);
       } catch (e) {
-        this.log.error(`EmeraldHws: Failed to get initial status for ${dev.id}:`, e.message);
+        this.log.error(`Failed to get initial status for ${dev.id}:`, e.message);
       }
 
+      // Pass initial status into accessory constructor
+      // The Accessory class starts its own safe poll loop in its constructor.
+      // We do NOT call startPolling here anymore.
       try {
-        const wrapper = new EmeraldHwsAccessory(
-          this,
-          accessory,
-          dev,
-          initialStatus,
-          this.client
+        new EmeraldHwsAccessory(
+            this,
+            accessory,
+            dev,
+            initialStatus,
+            this.client
         );
-        this.startPolling(wrapper);
       } catch (err) {
-        this.log.error(`EmeraldHws: Failed to create accessory for ${id}:`, err.message);
+        this.log.error(`Failed to initialize accessory ${name}:`, err.message);
       }
     }
-  }
-
-  startPolling(wrapper) {
-    if (!wrapper || !wrapper.refreshFromCloud) {
-      this.log.error('EmeraldHws: Polling failed — invalid wrapper object.');
-      return;
-    }
-
-    setInterval(() => {
-      try {
-        wrapper.refreshFromCloud();
-      } catch (err) {
-        this.log.error('EmeraldHws: Polling error:', err.message);
-      }
-    }, this.pollInterval * 1000);
   }
 }
 
