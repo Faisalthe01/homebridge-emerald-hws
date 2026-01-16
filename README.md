@@ -1,3 +1,6 @@
+[![verified-by-homebridge](https://img.shields.io/badge/homebridge-verified-blueviolet?color=%23491F59&style=flat)](https://github.com/homebridge/homebridge/wiki/Verified-Plugins)
+[![Donate](https://badgen.net/badge/buymeacoffee/donate?icon=https://ico.now.sh/buymeacoffee/fff)](https://buymeacoffee.com/faisalthe01)
+
 # homebridge-emerald-hws
 Homebridge plugin for Emerald Heat Pump Hot Water Systems.  
 Provides monitoring and basic control of the Emerald HWS through Apple HomeKit.
